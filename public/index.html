@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   <style>
+       #map { height: 250px; }
+   </style>
+</head>
+<body>
+    <div id="map"></div>
+    <p>  Photo: <img id = "image"> <br>
+         Name: <span id="name"></span>  <br>
+         Gender: <span id="gen"></span> <br>
+        Date of birth: <span id="dob"></span> <br>
+        Phone Number: <span id="num"></span> <br>
+        Address : <span id="add"></span> <br>   
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+
+    async function  getData(){
+         var response = await fetch("https://randomuser.me/api/");  
+        var  data = await response.json();
+        document.getElementById("image").src = data.results[0].picture.large;
+        document.getElementById("name").textContent = data.results[0].name.title +" "+ data.results[0].name.first +" "+data.results[0].name.last;
+        document.getElementById("gen").textContent = data.results[0].gender ;
+        var date =data.results[0].dob.date ;
+        console.log(date)
+        document.getElementById("dob").textContent = moment(date).format("DD MMM YYYY");
+        document.getElementById("num").textContent = data.results[0].phone;
+        document.getElementById("add").textContent = data.results[0].location.city + ", "+data.results[0].location.state+", "+data.results[0].location.country;
+    }
+    async function  getLoc(){
+         var response = await fetch("https://randomuser.me/api/");  
+        var  data = await response.json();
+        var lat = data.results[0].location.coordinates.latitude;
+        var  long=data.results[0].location.coordinates.longitude;
+        const map = L.map('map').setView([0, 0], 0.1);
+          const attribution =
+            '<a href="https://www.openstreetmap.org/copyright"></a>';
+          const tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+          const tiles = L.tileLayer(tileUrl, { attribution });
+          tiles.addTo(map);
+          const marker = L.marker([lat, long]).addTo(map); 
+    }
+
+    getData(); 
+    getLoc(); 
+</script>
+</html>
