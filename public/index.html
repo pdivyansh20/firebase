@@ -9,16 +9,29 @@
    crossorigin=""></script>
    <style>
        #map { height: 250px; }
+       #image{
+         border: solid white 5px;
+         border-radius: 50%;
+         vertical-align: middle;
+       }
+       body{
+         margin: 80px;
+         border: solid black 2px;
+         border-radius: 10px;
+       }
+     
    </style>
 </head>
 <body>
     <div id="map"></div>
-    <p>  Photo: <img id = "image"> <br>
-         Name: <span id="name"></span>  <br>
+
+        Photo: <img id = "image" > <br>
+         Name: <span id="name" ></span>  <br>
          Gender: <span id="gen"></span> <br>
         Date of birth: <span id="dob"></span> <br>
         Phone Number: <span id="num"></span> <br>
-        Address : <span id="add"></span> <br>   
+        Address : <span id="add"></span> <br>
+      
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
